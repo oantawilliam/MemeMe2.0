@@ -17,6 +17,7 @@ class SentMemesCollectionViewController: UICollectionViewController {
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getData()
         collectionView?.reloadData()
     }

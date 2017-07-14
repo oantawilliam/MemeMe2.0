@@ -39,8 +39,6 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
 //        }
         configureDefaultTextAttributes()
         resetToLaunchState()
-        topTextField.delegate = self
-        bottomTextField.delegate = self
     }
     
     func configureDefaultTextAttributes() {
@@ -56,6 +54,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     func prepareTextField(textField: UITextField, memeTextAttributes: [String:Any]) {
+        topTextField.delegate = self
+        bottomTextField.delegate = self
         textField.defaultTextAttributes = memeTextAttributes
         textField.textAlignment = NSTextAlignment.center
     }
@@ -178,9 +178,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     func generateMemedImage() -> UIImage {
         
-        // Hide toolbar and navbar
-        self.toolbar.isHidden = true
-        self.navbar.isHidden = true
+        self.toggleNavBars(true)
         
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
@@ -188,11 +186,14 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
-        // Hide toolbar and navbar
-        self.toolbar.isHidden = false
-        self.navbar.isHidden = false
+        self.toggleNavBars(false)
         
         return memedImage
+    }
+    
+    func toggleNavBars(_ state: Bool) {
+        self.toolbar.isHidden = state
+        self.navbar.isHidden = state
     }
     
     func saveMeme() {
